@@ -49,10 +49,39 @@ Questo rende il componente più difficile da seguire in termini di logica.
 Con il modo Composition API è possibile raggruppare tutta la logica insieme in una funzione chiamata setup.  
 E' possibile creare delle funzioni riutilizzabili semplicemente importandole `import getPosts from './getPosts'` e poi dichiarandole con `const data = getPosts()`.  
 E' possibile combinare i due modi Composition API e Options API nella stessa applicazione.  
-Per utilizzare questo modo dobbiamo creare il progetto con alcune modifiche.
+Per utilizzare questo modo dobbiamo creare il progetto con alcune accortezze.
 
 ### Composition API Basics ⛱️
 
 Il progetto viene creato cosi:
 ![project](https://i.ibb.co/9cTyQmQ/Capture.png)
 
+Le variabili settate nella sezione `setup()` non sono accessibili in scrittura dal `<template>` al contrario delle variabili settate con il modo `Option API` per esempio:
+```js
+data() {
+    return {
+        age: 40
+    }
+}
+```
+in questo caso sono dichiarte come variabili reattive, mentre cosi:
+```js
+setup(){
+    let age = 30
+    return {
+        age
+    }
+}
+```
+non è reattiva, quindi non soggetta al cambio di stato nel `<template>`
+
+## Template Refs in Composition API 🦝
+per rendere una variabile accessibile dal `<template>` dobbiamo per prima cosa dichiararla `const p = ref` ed assegnarla ad una riferimento inserendolo nel tag che ci serve ad esempio `<p ref="p">Ciao</p>`, quindi importarne poi il riferimento con `import { ref } fro 'vue'`.
+Per far si che il valore di p venga restituito al template, va aggiunto al return.
+
+## Uso delle Refs per rendere le variabili reattive 😊
+nel caso si voglia rendere una variabile reattiva basterà dichiarare ad esempio `let name = ref('Mario')` e poi restituire `name` nel return della funzione.  
+Nel `<template>` basterà richiamare `{{name}}`.
+
+## Refs vs Reactive 🐯
+in caso volessimo fare un ***oggetto*** componente reattivo (e non solo una variabile come nel caso precedente), basterà fare `import {reactive} from 'vue'`.
