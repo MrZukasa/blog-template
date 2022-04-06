@@ -6,22 +6,24 @@
     </p>
     <!-- <p ref="p" class=" text-2xl mt-4 "> -->
     <p class=" text-2xl mt-4 ">
-      Sono {{name}} ed ho {{age}} anni
+      Sono {{ oggettone.name }} ed ho {{ oggettone.age }} anni
     </p>
+
     <div class="mt-4">
       <button @click="handleClick" class="btn btn-orange mr-2">cliccami</button>
-      <button @click="age++" class="btn btn-orange">+1</button>
+      <button @click="oggettone.age++" class="btn btn-orange">+1</button>
     </div>
+
     <div class=" mt-4 ">
       <label class="text-xl mr-2">Nome</label>
-      <input type="text" v-model="name" class="nome">
+      <input type="text" v-model="oggettone.name" class="nome">
     </div>
   </div>
 
 </template>
 
 <script>
-import { ref } from 'vue'
+import { ref, reactive } from 'vue'
 
 export default {
   name: 'Home',
@@ -29,11 +31,11 @@ export default {
 
     //this.$refs.     <= questo non si usa qui dentro
     // const p = ref(null)
-    let oggettone = ref({ name: 'Mario', age: '35' })
+    let oggettone = ref({ name: 'Mario', age: 35 })
     // let name = ref('Mario')
     // let age = ref(35)
-    let update = () => {
-      update.value.age = 40
+    let handleClick = () => {
+      oggettone.value.age = 40
     }
 
     // const handleClick = () => {
@@ -48,7 +50,7 @@ export default {
     // }
 
     // return { name, age, handleClick }                 // tutto quello che esce da qui è disponibile nel html sopra, quindi nel template
-    return { update, oggettone }
+    return { oggettone, handleClick }
   }
 }
 

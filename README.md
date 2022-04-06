@@ -84,4 +84,5 @@ nel caso si voglia rendere una variabile reattiva basterà dichiarare ad esempio
 Nel `<template>` basterà richiamare `{{name}}`.
 
 ## Refs vs Reactive 🐯
-in caso volessimo fare un ***oggetto*** componente reattivo (e non solo una variabile come nel caso precedente), basterà fare `import {reactive} from 'vue'`.
+in caso volessimo fare un ***oggetto*** componente reattivo (e non solo una variabile come nel caso precedente), basterà fare `import {reactive} from 'vue'` ed utilizzare il componente come proprietà di un componente padre.
+Ad esempio `{{ oggettone.name }}` per la visulaizzazione e per la riassegnazione dei valori basterà fare una funzione con all'interno `oggettone.value.age = 40`.
