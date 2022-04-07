@@ -116,3 +116,13 @@ watchEffect(()=>{
 otterò il richiamo della funzione ad ogni cambiamento della variabile `nomeVariabile`, sono due modi per fare la stessa cosa.
 Questi metodi sono molto usati con i database.
 E' possibile assegnare i valori dei watch all'interno di vaibili `let variabile = watch(//codice qui)`
+
+>***NOTA*** i componenti vanno istanziati nel HTML con `<nomeComponente />`, importati nello script `import nomeComponente from '../components/nomeComponente.vue'` ed incluso nello script con `components: { SinglePost },`
+
+## Usare le props nel setup() 🦧
+Il modo classico per usare le props è `:props='props'` all'interno del tag e `props['variabile'],` dopo l'export default, mentre all'interno del `setup()` si farà `setup(props)`.  
+All'interno del `setup()` è possibile elaborare il dato passato con la `props` per poi utilizzarlo nuovamente all'interno dei `<template>`.
+
+## Lifecycle Hooks 🏤
+All'interno del `setup()` si usano cosi `onMounted()`, `onUnmounted()`, `onUpdated()`.
+Al posto di fare `mounted(){ //codice }`.

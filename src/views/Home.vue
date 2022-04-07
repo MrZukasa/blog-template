@@ -2,49 +2,30 @@
 
   <div class="home inline-block items-center mt-8">
     <label class=" text-4xl shadow-md ">Home</label>
-    <div class=" mt-4">
-      <input type="text" v-model="search" class="ricerca">
-      <p class="text-xl text-gray-400">valore cercato: {{search}}</p>
-    </div>    
-    <div v-for="name in matchingnames" :key="name">
-      <p class=" text-xl mt-2 ">{{name}}</p>
+    <PostList :posts="posts" v-if="showPosts"/>                              <!-- istanzio il componente e ne bindo il posts-->
+    <div>
+      <button @click="showPosts = !showPosts" class="btn btn-orange mt-3">Toggle</button>
+      <button @click="posts.pop()" class="btn btn-orange mt-3 ml-3">Cancella un post</button>
     </div>
-    <button @click="handleClick" class="btn btn-orange mt-3"> Stop </button>
   </div>
 
 </template>
 
 <script>
-import { ref, computed, watch, watchEffect } from 'vue'
+import PostList from '../components/PostList.vue'           //importo il componente
+import { ref } from 'vue'
+
 
 export default {
   name: 'Home',
+  components: { PostList },                                 //includo il componente
   setup()  {
-    // let name = computed(()=>{
-    //   return 'Yoshi'
-    // })  
-    // return { name }
-    let search = ref('')
-    let names = ref(['mario', 'luigi', 'yoshi','toad','bowser','peach'])
-    
-    let stopWatch = watch(search, () => {
-      console.log('watch')
-    })
-
-    let stopWatchEffect = watchEffect(()=>{
-      console.log('watchEffect',search.value)
-    })
-
-    let matchingnames = computed(()=>{
-      return names.value.filter((name)=>name.includes(search.value))
-    })
-
-    let handleClick = ()=>{
-      stopWatch()
-      stopWatchEffect()
-    }
-
-    return { names, search, matchingnames, handleClick }
+    let posts = ref([
+      { title: 'Welcome to the blog', body: 'Lorem ipsum dolor sit amet. Aut rerum eius a esse sequi in illo saepe ad molestias praesentium et magnam ipsa. Cum internos rerum ex voluptas exercitationem ex asperiores asperiores ut deleniti Quis ut aperiam odit aut voluptas dolorem. Qui harum voluptatibus et totam debitis et exercitationem galisum id assumenda possimus qui nulla asperiores. Et esse obcaecati qui galisum neque eum error natus ut temporibus optio. Et quod galisum aut molestiae cumque et nemo pariatur sit obcaecati minus. Id quaerat internos est tenetur fugiat ex eius eius et amet possimus et reprehenderit eaque in mollitia quia. Qui aperiam voluptas ut dignissimos nihil et adipisci inventore eos sunt aliquam quo fuga perferendis. Sit soluta quis qui velit sapiente et placeat modi sed temporibus galisum? Sed nisi error ut distinctio odit non aspernatur optio quo laborum laudantium.', id: 1},
+      { title: 'top 5 css tips', body: 'Lorem ipsum dolor sit amet. Aut rerum eius a esse sequi in illo saepe ad molestias praesentium et magnam ipsa. Cum internos rerum ex voluptas exercitationem ex asperiores asperiores ut deleniti Quis ut aperiam odit aut voluptas dolorem. Qui harum voluptatibus et totam debitis et exercitationem galisum id assumenda possimus qui nulla asperiores. Et esse obcaecati qui galisum neque eum error natus ut temporibus optio. Et quod galisum aut molestiae cumque et nemo pariatur sit obcaecati minus. Id quaerat internos est tenetur fugiat ex eius eius et amet possimus et reprehenderit eaque in mollitia quia. Qui aperiam voluptas ut dignissimos nihil et adipisci inventore eos sunt aliquam quo fuga perferendis. Sit soluta quis qui velit sapiente et placeat modi sed temporibus galisum? Sed nisi error ut distinctio odit non aspernatur optio quo laborum laudantium.', id: 2}
+    ])
+    let showPosts = ref(true)
+    return { posts,showPosts }
   }
 }
 
@@ -61,15 +42,12 @@ export default {
 .btn-orange:hover {
   @apply bg-orange-600;
 }
-
 body {
   @apply bg-slate-700
 }
-
 p, label {
   @apply text-stone-300 font-sans
 }
-
 .ricerca {
   @apply bg-slate-400 border-slate-800 border-2 rounded-md text-gray-600
    hover:border-orange-600 leading-tight appearance-none py-2 px-4 w-96
