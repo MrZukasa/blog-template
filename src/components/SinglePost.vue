@@ -1,7 +1,12 @@
 <template>
  <div class="post">
-     <p class="text-xl">{{post.title}}</p>
-     <p class=" text-sm ">{{ snippet }}</p>
+     <router-link :to="{name: 'Details', params: { id: post.id }}">
+        <p class="title">{{post.title}}</p>
+     </router-link>
+     <p class=" text-sm text-gray-400 italic ">{{ snippet }}</p>
+     <span v-for="tag in post.tags" :key="tag">
+         #{{ tag }}
+     </span>
  </div>
 </template>
 
@@ -18,3 +23,9 @@ export default {
     }
 }
 </script>
+
+<style>
+.title {
+    @apply text-xl hover:bg-orange-200 hover:bg-opacity-5 hover:text-gray-50 inline-block rounded-3xl px-3 py-1 
+}
+</style>

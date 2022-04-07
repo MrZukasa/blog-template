@@ -127,7 +127,7 @@ All'interno del `setup()` è possibile elaborare il dato passato con la `props` 
 All'interno del `setup()` si usano cosi `onMounted()`, `onUnmounted()`, `onUpdated()`.
 Al posto di fare `mounted(){ //codice }`.
 
-## Fetching Data in Setup() 🚵‍♀️
+## Fetching Data in Setup() con async🚵‍♀️
 Per raccogliere dei dati l'approccio corretto è:
 ```js
  setup()  {
@@ -146,3 +146,11 @@ Per raccogliere dei dati l'approccio corretto è:
     return { posts, error }
   }
 ```
+## Reusable Composable 🍘
+Uno dei vantaggi del metodo Composition API è quello del poter esternalizzare la logica in diversi componenti minori, cosi da renderli molto riutilizzabili.
+
+Per fare questo creo un file JavaScript contenente la mia funzione, file nella quale vado ad importare la ref con `import { ref } from 'vue'` ed al fondo esporto la mia funzione (per poterla importare altrove) facendo `export default getPosts`.
+
+Nel mio componente `.vue` vado ad importare questo script in JavaScript facendo `import getPosts from '../composable/getPosts'` e poi ne invoco la funzione con `getPosts()`, o meglio possiamo assegnare i valori che questa funzione restituisce ad un oggetto così `const { posts, error, load } = getPosts()` e poi posso invocare la funzione `load()`.
+
+Nel return del `setup()` saranno da restituire tutte le nostre variabili `return { posts,error }`.

@@ -1,41 +1,45 @@
 <template>
 
   <div class="home inline-block items-center mt-8">
-    <label class=" text-4xl shadow-md ">Home</label>
-    <PostList :posts="posts"/>
-    <div v-if="error" class="mt-3 text-red-600"> {{error}} </div>
+    <label class=" text-5xl shadow-md italic">Home</label>
+    <div v-if="posts.length" class="text-orange-400">
+      <PostList :posts="posts"/>
+    </div>
+    <div v-else-if="error" class="mt-3 text-red-600"> {{error}} </div>
+    <div v-else class=" text-3xl text-gray-300">Loading...</div>
   </div>
 
 </template>
 
 <script>
 import PostList from '../components/PostList.vue'           
-import { ref } from 'vue'
+// import { ref } from 'vue'
+import getPosts from '../composable/getPosts'
 
 
 export default {
   name: 'Home',
   components: { PostList },
   setup()  {
-    let posts = ref([])
-    let error = ref(null)
+    // let posts = ref([])
+    // let error = ref(null)
 
-    let load = async () => {
-      try {
-        let data = await fetch('http://localhost:3000/posts')                                            //aspetta che il fetch sia finito
-        if (!data.ok){
-          throw Error('Nessun dato disponibile')
-        }
-        posts.value = await data.json()
-      }
-      catch (e) {
-        error.value = e.message
-        console.error(error.value)
-      }
-    }
-
+    // let load = async () => {
+    //   try {
+    //     let data = await fetch('http://localhost:3000/posts')                                            //aspetta che il fetch sia finito
+    //     if (!data.ok){
+    //       throw Error('Nessun dato disponibile')
+    //     }
+    //     posts.value = await data.json()
+    //   }
+    //   catch (e) {
+    //     error.value = e.message
+    //     console.error(error.value)
+    //   }
+    // }
+    // load()
+    const { posts, error, load } = getPosts()                                                                 //invoke della mia funzione
     load()
-
     return { posts,error }
   }
 }
