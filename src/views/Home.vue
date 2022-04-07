@@ -6,11 +6,15 @@
     </p>
     <!-- <p ref="p" class=" text-2xl mt-4 "> -->
     <p class=" text-2xl mt-4 ">
-      Sono {{ oggettone.name }} ed ho {{ oggettone.age }} anni
+      By Ref: Sono {{ oggettone.name }} ed ho {{ oggettone.age }} anni
+    </p>
+    <p class=" text-2xl mt-4 ">
+      By Reactive: Sono {{ oggettone2.name }} ed ho {{ oggettone2.age }} anni
     </p>
 
     <div class="mt-4">
-      <button @click="handleClick" class="btn btn-orange mr-2">cliccami</button>
+      <button @click="handleClick" class="btn btn-orange mr-2">Ref</button>
+      <button @click="handleClick2" class="btn btn-orange mr-2">Reactive</button>
       <button @click="oggettone.age++" class="btn btn-orange">+1</button>
     </div>
 
@@ -32,10 +36,14 @@ export default {
     //this.$refs.     <= questo non si usa qui dentro
     // const p = ref(null)
     let oggettone = ref({ name: 'Mario', age: 35 })
+    let oggettone2 = reactive({ name: 'Luigi', age: 30 })
     // let name = ref('Mario')
     // let age = ref(35)
     let handleClick = () => {
       oggettone.value.age = 40
+    }
+    let handleClick2 = () => {
+      oggettone2.age = 45
     }
 
     // const handleClick = () => {
@@ -50,7 +58,7 @@ export default {
     // }
 
     // return { name, age, handleClick }                 // tutto quello che esce da qui è disponibile nel html sopra, quindi nel template
-    return { oggettone, handleClick }
+    return { oggettone, oggettone2, handleClick, handleClick2 }
   }
 }
 

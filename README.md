@@ -85,4 +85,7 @@ Nel `<template>` basterà richiamare `{{name}}`.
 
 ## Refs vs Reactive 🐯
 in caso volessimo fare un ***oggetto*** componente reattivo (e non solo una variabile come nel caso precedente), basterà fare `import {reactive} from 'vue'` ed utilizzare il componente come proprietà di un componente padre.
-Ad esempio `{{ oggettone.name }}` per la visulaizzazione e per la riassegnazione dei valori basterà fare una funzione con all'interno `oggettone.value.age = 40`.
+Per esempio `{{ oggettone.name }}`, per la visualizzazione e per la riassegnazione dei valori basterà fare una funzione con all'interno `oggettone2.age = 45`, in quanto è possibile aggedere direttamente al valore senza passare per il metodo `value` come era necessario fare per la modalità ref, che era `oggetone.value.age = 40`.  
+Un contro del reactive è che non posso usarlo per le variabili con ***primitive value*** come ad esempio `nome = reactive('Luigi')`, se uso questa modalità non riuscirò più ad aggiornare il valore di `nome`.
+
+
