@@ -2,30 +2,41 @@
 
   <div class="home inline-block items-center mt-8">
     <label class=" text-4xl shadow-md ">Home</label>
-    <PostList :posts="posts" v-if="showPosts"/>                              <!-- istanzio il componente e ne bindo il posts-->
-    <div>
-      <button @click="showPosts = !showPosts" class="btn btn-orange mt-3">Toggle</button>
-      <button @click="posts.pop()" class="btn btn-orange mt-3 ml-3">Cancella un post</button>
-    </div>
+    <PostList :posts="posts"/>
+    <div v-if="error" class="mt-3 text-red-600"> {{error}} </div>
   </div>
 
 </template>
 
 <script>
-import PostList from '../components/PostList.vue'           //importo il componente
+import PostList from '../components/PostList.vue'           
 import { ref } from 'vue'
 
 
 export default {
   name: 'Home',
-  components: { PostList },                                 //includo il componente
+  components: { PostList },
   setup()  {
-    let posts = ref([
-      { title: 'Welcome to the blog', body: 'Lorem ipsum dolor sit amet. Aut rerum eius a esse sequi in illo saepe ad molestias praesentium et magnam ipsa. Cum internos rerum ex voluptas exercitationem ex asperiores asperiores ut deleniti Quis ut aperiam odit aut voluptas dolorem. Qui harum voluptatibus et totam debitis et exercitationem galisum id assumenda possimus qui nulla asperiores. Et esse obcaecati qui galisum neque eum error natus ut temporibus optio. Et quod galisum aut molestiae cumque et nemo pariatur sit obcaecati minus. Id quaerat internos est tenetur fugiat ex eius eius et amet possimus et reprehenderit eaque in mollitia quia. Qui aperiam voluptas ut dignissimos nihil et adipisci inventore eos sunt aliquam quo fuga perferendis. Sit soluta quis qui velit sapiente et placeat modi sed temporibus galisum? Sed nisi error ut distinctio odit non aspernatur optio quo laborum laudantium.', id: 1},
-      { title: 'top 5 css tips', body: 'Lorem ipsum dolor sit amet. Aut rerum eius a esse sequi in illo saepe ad molestias praesentium et magnam ipsa. Cum internos rerum ex voluptas exercitationem ex asperiores asperiores ut deleniti Quis ut aperiam odit aut voluptas dolorem. Qui harum voluptatibus et totam debitis et exercitationem galisum id assumenda possimus qui nulla asperiores. Et esse obcaecati qui galisum neque eum error natus ut temporibus optio. Et quod galisum aut molestiae cumque et nemo pariatur sit obcaecati minus. Id quaerat internos est tenetur fugiat ex eius eius et amet possimus et reprehenderit eaque in mollitia quia. Qui aperiam voluptas ut dignissimos nihil et adipisci inventore eos sunt aliquam quo fuga perferendis. Sit soluta quis qui velit sapiente et placeat modi sed temporibus galisum? Sed nisi error ut distinctio odit non aspernatur optio quo laborum laudantium.', id: 2}
-    ])
-    let showPosts = ref(true)
-    return { posts,showPosts }
+    let posts = ref([])
+    let error = ref(null)
+
+    let load = async () => {
+      try {
+        let data = await fetch('http://localhost:3000/posts')                                            //aspetta che il fetch sia finito
+        if (!data.ok){
+          throw Error('Nessun dato disponibile')
+        }
+        posts.value = await data.json()
+      }
+      catch (e) {
+        error.value = e.message
+        console.error(error.value)
+      }
+    }
+
+    load()
+
+    return { posts,error }
   }
 }
 

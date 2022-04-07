@@ -126,3 +126,23 @@ All'interno del `setup()` è possibile elaborare il dato passato con la `props` 
 ## Lifecycle Hooks 🏤
 All'interno del `setup()` si usano cosi `onMounted()`, `onUnmounted()`, `onUpdated()`.
 Al posto di fare `mounted(){ //codice }`.
+
+## Fetching Data in Setup() 🚵‍♀️
+Per raccogliere dei dati l'approccio corretto è:
+```js
+ setup()  {
+    let posts = ref([])
+    let error = ref(null)
+
+    let load = async () => {
+      try {
+          let data = await fetch('URL')
+      }
+      catch (e) {
+
+      }
+    }
+    
+    return { posts, error }
+  }
+```
