@@ -88,4 +88,31 @@ in caso volessimo fare un ***oggetto*** componente reattivo (e non solo una vari
 Per esempio `{{ oggettone.name }}`, per la visualizzazione e per la riassegnazione dei valori basterà fare una funzione con all'interno `oggettone2.age = 45`, in quanto è possibile aggedere direttamente al valore senza passare per il metodo `value` come era necessario fare per la modalità ref, che era `oggetone.value.age = 40`.  
 Un contro del reactive è che non posso usarlo per le variabili con ***primitive value*** come ad esempio `nome = reactive('Luigi')`, se uso questa modalità non riuscirò più ad aggiornare il valore di `nome`.
 
+## Computed Values 🍰
+Per iniziare dobbiamo dichiarare la variabile ad esempio `let name = computed()` ed importarla `import { computed } from 'vue'`.
+L'idead generale è quella di usare le computed per passare valori più complessi di una singola variabile.
+Solitamente si usa per una logica più importante
 
+## Watch & watchEffect 🏝️
+Questo tipo di procedure si usa per monitorare il cambio di un singolo valore, come per gli altri metodi va importato con `import {watch} from 'vue'`.
+La funzione viene poi creata cosi: 
+```js
+watch(nomeVariabile, () => {
+      //codice
+    })
+```
+Con la funzione `watchEffect` invece, posso vedere quando il `watch` viene istanziato nella pagina per la prima volta.
+```js
+watchEffect(()=>{
+      //codice qui
+    })
+```
+caso in qui si introduca anche il valore che voglio osservare, ad esempio
+```js
+watchEffect(()=>{
+      console.log('watchEffect',nomeVariabile.value)
+    })
+```
+otterò il richiamo della funzione ad ogni cambiamento della variabile `nomeVariabile`, sono due modi per fare la stessa cosa.
+Questi metodi sono molto usati con i database.
+E' possibile assegnare i valori dei watch all'interno di vaibili `let variabile = watch(//codice qui)`
